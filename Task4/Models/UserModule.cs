@@ -7,7 +7,7 @@ namespace Task4.Models
 {
     public class UserModule
     {
-        public int Count { get; set; }
-        public string Provider { get; set; }
+        public int y { get; set; }
+        public string name { get; set; }
     }
 }

@@ -27,9 +27,9 @@ namespace Task4.Controllers
                            join ul in _context.UserLogins on u.Id equals ul.UserId
                            into um from userm in um.DefaultIfEmpty()
                            select (userm.ProviderDisplayName != null
-                            ? new UserModule {Count=1, Provider = userm.ProviderDisplayName }
-                            : new UserModule {Count=1, Provider = "Our System" });
-            var temp = UserInfo.ToList().GroupBy(x => x.Provider).Select(c => new UserModule { Count = c.Count(), Provider = c.Key });
+                            ? new UserModule {y=1, name = userm.ProviderDisplayName }
+                            : new UserModule {y=1, name = "Our System" });
+            var temp = UserInfo.ToList().GroupBy(x => x.name).Select(c => new UserModule { y = c.Count(), name = c.Key });
             return View(temp);
         }
 
