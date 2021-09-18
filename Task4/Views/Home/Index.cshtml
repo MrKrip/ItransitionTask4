@@ -1,8 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Task4.Models
+@model IEnumerable<UserModule>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>
+        <ul>
+            @foreach (var user in Model)
+            {
+                <li>@user.Count        @user.Provider</li>
+            }
+        </ul>
+    </p>
 </div>
