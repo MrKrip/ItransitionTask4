@@ -27,15 +27,21 @@ namespace Task4.Controllers
                            join ul in _context.UserLogins on u.Id equals ul.UserId
                            into um from userm in um.DefaultIfEmpty()
                            select (userm.ProviderDisplayName != null
-                            ? new UserModule {y=1, name = userm.ProviderDisplayName }
-                            : new UserModule {y=1, name = "Our System" });
-            var temp = UserInfo.ToList().GroupBy(x => x.name).Select(c => new UserModule { y = c.Count(), name = c.Key });
+                            ? new ChartModel {y=1, name = userm.ProviderDisplayName }
+                            : new ChartModel {y=1, name = "Our System" });
+            var temp = UserInfo.ToList().GroupBy(x => x.name).Select(c => new ChartModel { y = c.Count(), name = c.Key });
             return View(temp);
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult UsersManager()
+        {
+            var Users = _context.Users.Select(x=>new UserModel { Id=x.Id,UserName=x.UserName,Selected=false });
+            return View(Users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

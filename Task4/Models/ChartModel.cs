@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Task4.Models
 {
-    public class UserModule
+    public class ChartModel
     {
         public int y { get; set; }
         public string name { get; set; }

@@ -29,7 +29,7 @@ namespace Task4
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("HostingConnetction")));
 
             services.AddAuthentication()
                .AddGoogle(options =>
