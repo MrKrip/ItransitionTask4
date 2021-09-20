@@ -60,6 +60,7 @@ namespace Task4.Controllers
                         if (user != null)
                         {
                             IdentityResult result = await _userManager.DeleteAsync(user);
+                            await _userManager.UpdateSecurityStampAsync(user);
                             if (result.Succeeded)
                                 return RedirectToAction("Index");
                             else
