@@ -5,6 +5,9 @@
 @model IEnumerable<UserModel>
 <h1>@ViewData["Title"]</h1>
 <form method="post">
+
+    <input name="type" type="submit" value="Delete" class="btn btn-primary"
+           style="width:auto" />
     <table class="table table-striped">
         <thead>
             <tr>
@@ -18,9 +21,7 @@
             {
                 <tr>
                     <th>
-                        <input type="hidden" asp-for="@user.Id" />
-                        <input type="hidden" asp-for="@user.UserName" />
-                        <input asp-for="@user.Selected" class="form-check-input" />
+                        <input name="userId" asp-for="@user.Selected" value="@user.Id" class="form-check-input" />
                     </th>
                     <th>
                         <label class="form-check-label" asp-for="@user.Selected">

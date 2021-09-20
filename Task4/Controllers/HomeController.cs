@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,14 @@ namespace Task4.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger,ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = db;
+            _userManager=userManager;
         }
 
         public IActionResult Index()
@@ -42,6 +45,30 @@ namespace Task4.Controllers
         {
             var Users = _context.Users.Select(x=>new UserModel { Id=x.Id,UserName=x.UserName,Selected=false });
             return View(Users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UsersManager(string[] userId, string type)
+        {
+            if (userId != null)
+            {
+                foreach (var id in userId)
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    if (type == "Delete")
+                    {
+                        if (user != null)
+                        {
+                            IdentityResult result = await _userManager.DeleteAsync(user);
+                            if (result.Succeeded)
+                                return RedirectToAction("Index");
+                            else
+                                Error();
+                        }
+                    }
+                }               
+            }
+            return RedirectToAction("UsersManager");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
